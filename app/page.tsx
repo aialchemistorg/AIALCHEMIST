@@ -7,7 +7,7 @@ import {
   Mail, MapPin, Star, Github, Linkedin, Twitter, Crown, User
 } from 'lucide-react';
 import TeamCard from '../components/ui/TeamCard';
-
+import { useAnimationControls } from "framer-motion";
 import Image from 'next/image';
 
 // Navigation Component
@@ -515,7 +515,6 @@ const TeamSection = () => {
                     quote={member.quote}
                     social={member.social}
                     delay={0.3 + index * 0.1 + memberIndex * 0.05}
-                    controls={controls}
                   />
                 ))}
               </div>

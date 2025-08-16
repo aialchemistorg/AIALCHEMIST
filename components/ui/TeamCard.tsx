@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Image from "next/image";
-import { AnimationControls } from "framer-motion"; // ✅ lagana hoga
+import { AnimationPlaybackControls } from "framer-motion"; // ✅ sirf ye lagao
 
 // Props type
 type TeamCardProps = {
@@ -11,7 +11,6 @@ type TeamCardProps = {
   quote: string;
   social: { linkedin: string; twitter: string; github: string };
   delay: number;
-  controls: AnimationControls;
 };
 
 const TeamCard: React.FC<TeamCardProps> = ({
@@ -21,7 +20,6 @@ const TeamCard: React.FC<TeamCardProps> = ({
   quote,
   social,
   delay,
-  controls,
 }) => {
   return (
     <StyledWrapper>
@@ -38,7 +36,6 @@ const TeamCard: React.FC<TeamCardProps> = ({
             strokeWidth={2}
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="lucide lucide-mail"
           >
             <rect width={20} height={16} x={2} y={4} rx={2} />
             <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
@@ -48,8 +45,8 @@ const TeamCard: React.FC<TeamCardProps> = ({
         {/* Profile Pic */}
         <div className="profile-pic">
           <Image
-            src={imgSrc} // ✅ ab error nahi aayega
-            alt={name || "profile picture"} // ✅ safe fallback
+            src={imgSrc}
+            alt={name || "profile picture"}
             width={300}
             height={300}
             style={{ objectFit: "cover", objectPosition: "center top" }}
@@ -64,27 +61,22 @@ const TeamCard: React.FC<TeamCardProps> = ({
           </div>
           <div className="bottom-bottom">
             <div className="social-links-container">
-              {/* LinkedIn */}
               <a href={social.linkedin} target="_blank" rel="noopener noreferrer">
                 <svg xmlns="http://www.w3.org/2000/svg" width={16} height="15.999" viewBox="0 0 16 15.999">
                   <path
-                    id="Subtraction_4"
-                    data-name="Subtraction 4"
                     d="M6-582H-2a4,4,0,0,1-4-4v-8a4,4,0,0,1,4-4H6a4,4,0,0,1,4,4v8A4,4,0,0,1,6-582ZM2-594a4,4,0,0,0-4,4,4,4,0,0,0,4,4,4,4,0,0,0,4-4A4.005,4.005,0,0,0,2-594Zm4.5-2a1,1,0,0,0-1,1,1,1,0,0,0,1,1,1,1,0,0,0,1-1A1,1,0,0,0,6.5-596ZM2-587.5A2.5,2.5,0,0,1-.5-590,2.5,2.5,0,0,1,2-592.5,2.5,2.5,0,0,1,4.5-590,2.5,2.5,0,0,1,2-587.5Z"
                     transform="translate(6 598)"
                   />
                 </svg>
               </a>
-              {/* Twitter */}
               <a href={social.twitter} target="_blank" rel="noopener noreferrer">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                   <path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" />
                 </svg>
               </a>
-              {/* Github */}
               <a href={social.github} target="_blank" rel="noopener noreferrer">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512">
-                  <path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6..."></path>
+                  <path d="M165.9 397.4c0 2-2.3 3.6-5.2..."></path>
                 </svg>
               </a>
             </div>
@@ -95,8 +87,6 @@ const TeamCard: React.FC<TeamCardProps> = ({
     </StyledWrapper>
   );
 };
-
-// 👇 Tera styling untouched
 const StyledWrapper = styled.div`
   .card {
     width: 280px;
