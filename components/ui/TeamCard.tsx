@@ -88,10 +88,11 @@ const TeamCard: React.FC<TeamCardProps> = ({
   );
 };
 const StyledWrapper = styled.div`
-  .card {
+ .card {
     width: 280px;
     height: 280px;
-    background: white;
+    background: #111827;   /* 👈 dark slate bg */
+  color: #F9FAFB;   
     border-radius: 32px;
     padding: 3px;
     position: relative;
@@ -116,7 +117,8 @@ const StyledWrapper = styled.div`
     stroke: #f55d56;
   }
 
-  .card .profile-pic {
+
+ .card .profile-pic {
     position: absolute;
     width: calc(100% - 6px);
     height: calc(100% - 6px);
@@ -124,25 +126,51 @@ const StyledWrapper = styled.div`
     left: 3px;
     border-radius: 29px;
     z-index: 1;
-    border: 0px solid #fbb9b6;
+     border: 4px solid #ef4444; 
     overflow: hidden;
-    transition: all 0.5s ease-in-out 0.2s, z-index 0.5s ease-in-out 0.2s;
+    clip-path: circle(75% at 50% 50%);  /* 👈 smooth mask */
+    transition: 
+      width 0.6s ease-in-out,
+      height 0.6s ease-in-out,
+      top 0.6s ease-in-out,
+      left 0.6s ease-in-out,
+      clip-path 0.6s ease-in-out,  /* 👈 use clip-path instead of border-radius */
+      border 0.6s ease-in-out,
+      box-shadow 0.6s ease-in-out,
+      z-index 0.6s ease-in-out;
+  }
+
+  .card:hover .profile-pic {
+    width: 110px;
+    height: 110px;
+    top: 10px;
+    left: 10px;
+    clip-path: circle(50% at 50% 50%); /* 👈 perfect circle */
+    border: 6px solid #fbb9b6;
+    z-index: 3;
+    box-shadow: rgba(96, 75, 74, 0.2) 0px 5px 15px;
   }
 
   .card .profile-pic img {
     object-fit: cover;
     width: 100%;
     height: 100%;
-    object-position: 0px 0px;
-    transition: all 0.5s ease-in-out 0s;
+    object-position: center top;
+    transition: transform 0.6s ease-in-out, object-position 0.6s ease-in-out;
   }
+
+  .card:hover .profile-pic img {
+    transform: scale(1.2);
+    object-position: center -20%;
+  }
+
 
   .card .bottom {
     position: absolute;
     bottom: 3px;
     left: 3px;
     right: 3px;
-    background: #fbb9b6;
+    background: #1F2937;
     top: 80%;
     border-radius: 29px;
     z-index: 2;
@@ -201,8 +229,8 @@ const StyledWrapper = styled.div`
   }
 
   .card .bottom .bottom-bottom .button {
-    background: white;
-    color: #fbb9b6;
+    background: #ef4444;   /* 👈 red accent button */
+  color: #fff;
     border: none;
     border-radius: 20px;
     font-size: 0.6rem;
@@ -213,7 +241,7 @@ const StyledWrapper = styled.div`
   }
 
   .card .bottom .bottom-bottom .button:hover {
-    background: #f55d56;
+     background: #DC2626; 
     color: white;
   }
 
