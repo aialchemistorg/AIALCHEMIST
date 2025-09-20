@@ -542,7 +542,7 @@ const ContactSection = () => {
 
   return (
     <section id="contact" ref={ref} className="py-20 px-4 sm:px-6 lg:px-8 relative">
-      {/* Background Gradient */}
+      {/* Background Gradient utkarsh*/}
       <div className="absolute inset-0 bg-gradient-to-br from-red-600/10 via-transparent to-red-600/5 blur-3xl" />
 
       <div className="max-w-4xl mx-auto relative z-10">
