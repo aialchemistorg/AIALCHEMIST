@@ -240,21 +240,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className={`${inter.className} antialiased min-h-screen flex flex-col`}>
-        <header className=" bg-gray-800">
-          <img
-            src="/logo.png"
-            alt="AIALCHEMIST Logo"
-            className="h-10"
-          />
-        </header>
-
-        <main className="flex-grow container">
+        <main className="flex-grow container mx-auto p-4">
           {children}
         </main>
-
-        <footer className="text-center text-sm text-gray-400">
-          © {new Date().getFullYear()} AIALCHEMIST. All rights reserved.
-        </footer>
       </body>
     </html>
   );
