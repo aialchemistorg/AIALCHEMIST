@@ -59,11 +59,7 @@ export const metadata: Metadata = {
   creator: SITE_DATA.author,
   publisher: SITE_DATA.author,
   verification: {
-    google: "",
-    yandex: "",
-    other: {
-      "msvalidate.01": "",
-    },
+    google: "GtDRX3ONvRXYgr6Gxfgy4zf1Cml79WpXWbHNIvIoTwE"
   },
   icons: {
     icon: [
