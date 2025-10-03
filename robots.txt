@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://aialchemist.vercel.app
+
+# Sitemaps
+Sitemap: https://aialchemist.vercel.app/sitemap.xml
