@@ -42,6 +42,10 @@ export const metadata: Metadata = {
     "Open Source",
     "Student Innovation",
     "Hackathons",
+    "CTF",
+    "Hacking",
+    "Cyber Security",
+    "Web Development",
     "Machine Learning",
     "AIALCHEMIST",
     "Global Community",
@@ -87,7 +91,7 @@ export const metadata: Metadata = {
         alt: `${SITE_DATA.title} Logo`,
       },
       {
-        url: "/aialchemist-banner.png", // Replace with a real banner image
+        url: "/aialchemist-banner.png",
         width: 1200,
         height: 630,
         alt: "AIALCHEMIST Banner",
