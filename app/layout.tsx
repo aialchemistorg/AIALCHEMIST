@@ -229,11 +229,35 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="application-name" content={SITE_DATA.title} />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-        {/* JSON-LD structured data */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-        />
+        {/* FontAwesome */}
+        <script src="https://kit.fontawesome.com/a076d05399.js" crossOrigin="anonymous"></script>
+
+        {/* Structured Data (JSON-LD for AIALCHEMIST) */}
+        <script type="application/ld+json" dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "AIALCHEMIST",
+            "url": "https://aialchemist.vercel.app/",
+            "sameAs": [
+              "https://www.linkedin.com/company/aialchemistorg/",
+              "https://github.com/aialchemistorg/"
+            ],
+            "description": "AIALCHEMIST is a next-generation platform focused on AI, Web3, and project-based community learning.",
+            "founder": {
+              "@type": "Person",
+              "name": "Sayman Lal",
+              "alumniOf": "Gyan Ganga Institute of Technology and Sciences",
+              "knowsAbout": [
+                "Artificial Intelligence and Machine Learning",
+                "Cloud Engineering and DevOps",
+                "Full-Stack Development",
+                "Web3 and Blockchain",
+                "Cybersecurity and Ethical Hacking"
+              ]
+            }
+          })
+        }} />
       </head>
       <body className={`${inter.className} antialiased min-h-screen flex flex-col`}>
         <main className="flex-grow container mx-auto">
@@ -242,4 +266,5 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </body>
     </html>
   );
+
 }
