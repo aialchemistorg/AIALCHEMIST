@@ -240,7 +240,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className={`${inter.className} antialiased min-h-screen flex flex-col`}>
-        <main className="flex-grow container mx-auto p-4">
+        <main className="flex-grow container mx-auto">
           {children}
         </main>
       </body>
