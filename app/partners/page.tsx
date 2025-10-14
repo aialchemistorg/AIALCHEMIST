@@ -5,9 +5,13 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, useAnimation, useInView } from 'framer-motion';
 import { Menu, X, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
+// ✅ Added import
+import { useRouter } from 'next/navigation';
 
 const PartnersPage = () => {
-  // Navbar Component
+  const router = useRouter(); // ✅ Added router for internal navigation
+
+  // Navbar Component (unchanged)
   const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
@@ -94,7 +98,7 @@ const PartnersPage = () => {
     );
   };
 
-  // Partners Data
+  // ✅ Partner data updated slightly: changed external URLs to internal routes
   const partnerCategories = [
     {
       title: "Technology Pioneers",
@@ -104,25 +108,25 @@ const PartnersPage = () => {
           name: "React India",
           logo: "/partner/reactindia.png",
           tagline: "Advancing AI research",
-          url: "https://openai.com"
+          route: "/partners/subpages/reactindia" // ✅ internal route
         },
         {
           name: "Open Source Connect India",
           logo: "/partner/osci.png",
           tagline: "Accelerated computing",
-          url: "https://nvidia.com"
+          route: "/partners/subpages/oscipage"
         },
         {
           name: "Microsoft",
           logo: "/partners/microsoft.png",
           tagline: "Cloud services",
-          url: "https://microsoft.com"
+          route: "/partners/subpages/microsoft-page"
         },
         {
           name: "AWS",
           logo: "/partners/aws.png",
           tagline: "Cloud platform",
-          url: "https://aws.amazon.com"
+          route: "/partners/subpages/aws-page"
         }
       ]
     },
@@ -134,19 +138,19 @@ const PartnersPage = () => {
           name: "AICTE",
           logo: "/partners/mit.png",
           tagline: "Cutting-edge research",
-          url: "https://mit.edu"
+          route: "/partners/subpages/aicte-page"
         },
         {
           name: "Stanford",
           logo: "/partners/stanford.png",
           tagline: "AI innovation",
-          url: "https://stanford.edu"
+          route: "/partners/subpages/stanford-page"
         },
         {
           name: "ETH Zurich",
           logo: "/partners/eth.png",
           tagline: "Technical excellence",
-          url: "https://ethz.ch"
+          route: "/partners/subpages/eth-page"
         }
       ]
     },
@@ -158,19 +162,19 @@ const PartnersPage = () => {
           name: "Core Connect",
           logo: "/partners/ethereum.png",
           tagline: "Blockchain foundation",
-          url: "https://ethereum.org"
+          route: "/partners/subpages/coreconnect-page"
         },
         {
           name: "Open Source Connect India",
           logo: "/partner/osci.png",
           tagline: "Scalable solutions",
-          url: "https://polygon.technology"
+          route: "/partners/subpages/osci-page"
         },
         {
           name: "GitHub",
           logo: "/partners/github.png",
           tagline: "Developer platform",
-          url: "https://github.com"
+          route: "/partners/subpages/github-page"
         }
       ]
     }
@@ -249,11 +253,10 @@ const PartnersPage = () => {
                     }}
                     className="flex justify-center"
                   >
-                    <motion.a
-                      href={partner.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex flex-col items-center group"
+                    {/* ✅ Changed <a> to a <div> with router.push() for internal routing */}
+                    <motion.div
+                      onClick={() => router.push(partner.route)}
+                      className="flex flex-col items-center group cursor-pointer"
                       whileHover={{ y: -8 }}
                       transition={{ type: 'spring', stiffness: 400, damping: 10 }}
                     >
@@ -276,7 +279,7 @@ const PartnersPage = () => {
                       >
                         <p className="text-gray-400 text-sm italic">"{partner.tagline}"</p>
                       </motion.div>
-                    </motion.a>
+                    </motion.div>
                   </motion.div>
                 ))}
               </div>
@@ -285,7 +288,7 @@ const PartnersPage = () => {
         </div>
       </section>
 
-      {/* Animated CTA Section */}
+      {/* CTA Section (unchanged) */}
       <section className="pb-32 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <motion.div
