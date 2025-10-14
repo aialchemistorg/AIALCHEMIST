@@ -1,11 +1,11 @@
-// app/partners/subpages/reactindia-page/page.tsx
+// app/partners/subpages/reactindia/reactindia-page.tsx
 'use client';
 
 import { ArrowLeft } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 // The URL of the external website to embed
-const REACT_INDIA_URL = 'https://www.reactindia.io';
+const REACT_INDIA_URL = 'https://www.reactindia.io/';
 const PAGE_TITLE = 'React India Conference';
 
 const ReactIndiaEmbedPage = () => {
@@ -14,8 +14,9 @@ const ReactIndiaEmbedPage = () => {
   return (
     // This container fills the entire viewport
     <div className="flex flex-col h-screen w-screen bg-black">
-      {/* Custom Header */}
-      <header className="flex items-center p-4 bg-black border-b border-red-600/20 shadow-lg sticky top-0 w-full z-50 h-16">
+      
+      {/* Custom Header (Fixed at the top) */}
+      <header className="flex items-center p-4 bg-black border-b border-red-600/20 shadow-lg fixed top-0 left-0 right-0 z-50 h-16">
         <button
           onClick={() => router.back()}
           className="inline-flex items-center text-white hover:text-red-400 transition-colors mr-4"
@@ -27,15 +28,13 @@ const ReactIndiaEmbedPage = () => {
         </h1>
       </header>
       
-      {/* The Iframe element */}
+      {/* The Iframe element (starts below the header) */}
       <iframe
-        // The src is hardcoded to the external website
         src={REACT_INDIA_URL}
         title={PAGE_TITLE}
-        // Tailwind classes to make the iframe fill the rest of the screen below the header
-        className="flex-grow w-full border-0" 
-        // Essential attributes for security and functionality
-        // We allow some actions like scripts and popups, as needed for a fully functional embedded site
+        // Flex-grow makes it take up remaining space, mt-16 offsets the fixed header
+        className="flex-grow w-full border-0 mt-16" 
+        // Security/Functionality attributes
         sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-modals"
         allowFullScreen
       >
