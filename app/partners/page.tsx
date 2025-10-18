@@ -1,21 +1,26 @@
+// app/partners/page.tsx
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, useAnimation, useInView } from 'framer-motion';
 import { Menu, X, ArrowRight, ExternalLink } from 'lucide-react';
+import { url } from 'node:inspector';
 // import Image from 'next/image'; // ERROR: Cannot resolve 'next/image'
 
 // FIX: Replace next/image import with a simple img tag wrapper for compatibility
 const Image = (props: { src: string; alt: string; width: number; height: number; className: string }) => (
-    // Note: In a real Next.js environment, you would use the imported Image component.
-    // For this context, we use a standard <img> tag.
-    <img src={props.src} alt={props.alt} className={props.className} style={{ width: props.width, height: props.height, objectFit: 'contain' }} />
+    <img src={props.src} alt={props.alt} 
+    className={props.className} 
+    style={{ width: props.width, 
+    height: props.height,
+    objectFit: 'contain' }} />
 );
 
 
 const PartnersPage = () => {
   // --- START OF ADDED CODE FOR IFRAME EMBEDDING ---
   const [embeddedUrl, setEmbeddedUrl] = useState<string | null>(null);
+  const [iframeError, setIframeError] = useState(false);
 
   const closeIframe = useCallback(() => {
     setEmbeddedUrl(null);
@@ -23,6 +28,14 @@ const PartnersPage = () => {
 
   // Define which category should trigger the embedding behavior
   const EMBEDDED_CATEGORY_TITLE = "Technology Pioneers";
+
+  const BLOCKED_DOMAINS = [    
+    "aws.amazon.com", 
+    "mit.edu", 
+    "stanford.edu", 
+    "ethz.ch", 
+    "ethereum.org", 
+    "github.com"];
   // --- END OF ADDED CODE FOR IFRAME EMBEDDING ---
 
   // Navbar Component
@@ -133,13 +146,13 @@ const PartnersPage = () => {
         },
         {
           name: "Microsoft",
-          logo: "/partners/microsoft.png",
+          logo: "/partner/microsoft.png",
           tagline: "Cloud services",
           url: "https://microsoft.com"
         },
         {
           name: "AWS",
-          logo: "/partners/aws.png",
+          logo: "/partner/aws.png",
           tagline: "Cloud platform",
           url: "https://aws.amazon.com"
         }
@@ -151,19 +164,19 @@ const PartnersPage = () => {
       partners: [
         {
           name: "AICTE",
-          logo: "/partners/mit.png",
+          logo: "/partner/mit.png",
           tagline: "Cutting-edge research",
           url: "https://mit.edu"
         },
         {
           name: "Stanford",
-          logo: "/partners/stanford.png",
+          logo: "/partner/stanford.png",
           tagline: "AI innovation",
           url: "https://stanford.edu"
         },
         {
           name: "ETH Zurich",
-          logo: "/partners/eth.png",
+          logo: "/partner/eth.png",
           tagline: "Technical excellence",
           url: "https://ethz.ch"
         }
@@ -175,7 +188,7 @@ const PartnersPage = () => {
       partners: [
         {
           name: "Core Connect",
-          logo: "/partners/ethereum.png",
+          logo: "/partner/ethereum.png",
           tagline: "Blockchain foundation",
           url: "https://ethereum.org"
         },
@@ -187,7 +200,7 @@ const PartnersPage = () => {
         },
         {
           name: "GitHub",
-          logo: "/partners/github.png",
+          logo: "/partner/github.png",
           tagline: "Developer platform",
           url: "https://github.com"
         }
@@ -204,18 +217,30 @@ const PartnersPage = () => {
   }, [isInView, controls]);
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="bg-gradient-to-br from-black via-gray-900 to-black">
+         <motion.div
+            animate={{
+              background: [
+                "radial-gradient(circle at 20% 80%, rgba(220, 38, 38, 0.1) 0%, transparent 50%)",
+                "radial-gradient(circle at 80% 20%, rgba(220, 38, 38, 0.1) 0%, transparent 50%)",
+                "radial-gradient(circle at 40% 40%, rgba(220, 38, 38, 0.1) 0%, transparent 50%)"
+              ]
+            }}
+            transition={{ duration: 8, repeat: Infinity, repeatType: "reverse" }}
+            className="inset-0"
+          />
       <Navbar />
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 text-center relative overflow-hidden">
+      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 text-center flex items-center justify-center relative overflow-hidden
+      ">
         <div className="absolute inset-0 bg-gradient-to-br from-black to-red-900/10 opacity-50" />
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10" />
-        
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.2 }}
+          transition={{ duration: 0.1 }}
           className="relative z-10"
         >
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
@@ -233,16 +258,14 @@ const PartnersPage = () => {
       <section ref={ref} className="pb-32 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto space-y-20">
           {partnerCategories.map((category, index) => {
-            // ADDED: Check if this category should be embedded
-            const isEmbeddedCategory = category.title === EMBEDDED_CATEGORY_TITLE;
 
-return (
+            return (
               <motion.div
                 key={category.title}
                 initial={{ opacity: 0, x: -20 }}
                 animate={controls}
                 variants={{ visible: { opacity: 1, x: 0 } }}
-                // Keeping a subtle stagger for the main category sections
+                // Keeping a subtle animation for the main category sections
                 transition={{ delay: 0.1 + index * 0.1 }} 
                 className="mb-16"
               >
@@ -250,89 +273,96 @@ return (
                   <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
                     {category.title}
                   </h2>
-                  {/* MODIFIED: Update description to clarify click behavior */}
                   <p className="text-gray-400 max-w-2xl mx-auto">
                     {category.description} 
-                    {isEmbeddedCategory && (
-                        <span className='text-red-400 font-medium'> (Click to view embedded site)</span>
-                    )}
+                    {/* Added universal click instruction */}
+                    <span className='text-red-400 font-medium'> (Click any partner to view site preview)</span>
                   </p>
-                  {/* END MODIFIED */}
                 </div>
 
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8">
-                  {category.partners.map((partner, partnerIndex) => (
-                    <motion.div
-                      key={partner.name}
-                      variants={{
-                        hidden: { opacity: 0, y: 20 },
-                        visible: {
-                          opacity: 1,
-                          y: 0,
-                          transition: {
-                            // REMOVED DELAY: Partner cards now appear instantly once their category is visible
-                            duration: 0.4, 
-                            type: 'spring',
-                            stiffness: 100
-                          }
-                        }
-                      }}
-                      className="flex justify-center"
-                    >
-                      {/* MODIFIED: Add onClick handler and conditional attributes */}
-                      <motion.a
-                        href={partner.url}
-                        target={isEmbeddedCategory ? '_self' : '_blank'}
-                        rel={isEmbeddedCategory ? '' : 'noopener noreferrer'}
-                        className={`flex flex-col items-center group w-full max-w-[150px] p-2 rounded-lg transition-all duration-300 ${
-                            isEmbeddedCategory 
-                                ? 'cursor-pointer hover:bg-red-900/20' 
-                                : 'cursor-default'
-                        }`}
-                        whileHover={{ y: -8 }}
-                        transition={{ type: 'spring', stiffness: 400, damping: 10 }}
-                        onClick={(e) => {
-                            if (isEmbeddedCategory) {
-                                e.preventDefault(); 
-                                setEmbeddedUrl(partner.url);
+                  {category.partners.map((partner, partnerIndex) => {
+                    // New check: is it clickable?
+                    const isClickable = !!partner.url;
+
+                    return (
+                        <motion.div
+                          key={partner.name}
+                          variants={{
+                            hidden: { opacity: 0, y: 20 },
+                            visible: {
+                              opacity: 1,
+                              y: 0,
+                              transition: {
+                                duration: 0.4, 
+                                type: 'spring',
+                                stiffness: 100
+                              }
                             }
-                        }}
-                      >
-                        <div className="w-28 h-28 rounded-full bg-gradient-to-br from-red-900/30 to-orange-900/30 p-0.5 mb-3">
-                          <div className="w-full h-full rounded-full bg-gray-900 flex items-center justify-center overflow-hidden">
-                            <Image
-                              src={partner.logo}
-                              alt={partner.name}
-                              width={80}
-                              height={80}
-                              className="object-contain w-16 h-16 group-hover:scale-105 transition-transform duration-300"
-                            />
-                          </div>
-                        </div>
-                        <p className="text-white font-semibold mb-1">{partner.name}</p> 
-                        {/* TAGLINE: Still hidden by default, visible on hover */}
-                        <p className="text-gray-400 text-sm italic opacity-0 group-hover:opacity-100 transform translate-y-1 group-hover:translate-y-0 transition-all duration-300">"{partner.tagline}"</p>
-                        {/* ICON: Still hidden by default, visible on hover */}
-                        <div className="mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            {isEmbeddedCategory ? (
-                                <ExternalLink size={14} className="text-red-500/80" />
-                            ) : (
-                                <ExternalLink size={14} className="text-gray-500" />
-                            )}
-                        </div>
-                        {/* END ADDED */}
-                      </motion.a>
-                      {/* END MODIFIED */}
-                    </motion.div>
-                  ))}
+                          }}
+                          className="flex justify-center"
+                        >
+                          <motion.a
+                            // Check if clickable to determine target and rel attributes
+                            href={isClickable ? partner.url : '#'}
+                            target={isClickable ? '_self' : '_blank'}
+                            rel={isClickable ? '' : 'noopener noreferrer'}
+                            className={`flex flex-col items-center group w-full max-w-[150px] p-4 rounded-lg transition-all duration-300 ${
+                                isClickable 
+                                    ? 'cursor-pointer hover:bg-red-900/20' 
+                                    : 'cursor-default opacity-75' // Dim if not clickable
+                            }`}
+                            whileHover={{ y: isClickable ? -8 : 0 }}
+                            transition={{ type: 'spring', stiffness: 700, damping: 30 }} 
+                            onClick={(e) => {
+                                if (isClickable) {
+                                    e.preventDefault(); 
+                                    
+                                    const url = partner.url;
+                                    // FIX: Normalize URL for reliable comparison against BLOCKED_DOMAINS
+                                    const normalizedUrl = url.toLowerCase().replace(/^https?:\/\//, '').replace(/\/$/, '');
+                                    
+                                    // Checking immediately if this is a blocked site
+                                    const isBlocked = BLOCKED_DOMAINS.some(domain => normalizedUrl.includes(domain));
+                                    
+                                    setEmbeddedUrl(url);
+                                    setIframeError(isBlocked);
+                                }
+                            }}
+                          >
+                            <div className="w-28 h-28 rounded-full bg-gradient-to-br from-red-900/30 to-orange-900/30 p-0.5 mb-3">
+                              <div className="w-full h-full rounded-full bg-gray-900 flex items-center justify-center overflow-hidden">
+                                <Image
+                                  src={partner.logo}
+                                  alt={partner.name}
+                                  width={80}
+                                  height={80}
+                                  className="object-contain w-16 h-16 group-hover:scale-105 transition-transform duration-300"
+                                />
+                              </div>
+                            </div>
+                            <p className="text-white font-semibold mb-1">{partner.name}</p> 
+                            <p className="text-gray-400 text-sm italic opacity-0 group-hover:opacity-100 transform translate-y-1 group-hover:translate-y-0 transition-all duration-150">"{partner.tagline}"</p>
+                            
+                            <div className="mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-150">
+                                {isClickable ? (
+                                    <ExternalLink size={14} className="text-red-500/80" />
+                                ) : (
+                                    <ExternalLink size={14} className="text-gray-500" />
+                                )}
+                            </div>
+                          </motion.a>
+                        </motion.div>
+                    );
+                  })}
                 </div>
               </motion.div>
             );
           })}
         </div>
       </section>
-
-      {/* Animated CTA Section */}
+    
+{/* Animated CTA Section */}
       <section className="pb-32 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <motion.div
@@ -387,7 +417,7 @@ return (
         </div>
       </section>
 
-      {/* --- START OF ADDED CODE: IFRAME VIEWER MODAL --- */}
+     {/* --- START OF ADDED CODE: IFRAME VIEWER MODAL --- */}
       {embeddedUrl && (
           <motion.div
               initial={{ opacity: 0 }}
@@ -411,18 +441,45 @@ return (
                       </button>
                   </div>
 
-                  {/* The Iframe Container */}
-                  <div className="flex-1 w-full rounded-xl overflow-hidden border-4 border-red-600/50 shadow-2xl mt-4 mb-4">
-                      <iframe
-                          src={embeddedUrl}
-                          title={`Embedded Partner Site: ${embeddedUrl}`}
-                          className="w-full h-full bg-white"
-                          frameBorder="0"
-                          loading="lazy"
-                          allowFullScreen
-                      >
-                          Your browser does not support iframes.
-                      </iframe>
+                  {/* The Iframe Container (Conditional based on iframeError) */}
+                  <div className="flex-1 w-full rounded-xl overflow-hidden border-4 border-red-600/50 shadow-2xl mt-4 mb-4 relative">
+                      {iframeError ? (
+                          <motion.div
+                              initial={{ opacity: 0, scale: 0.9 }}
+                              animate={{ opacity: 1, scale: 1 }}
+                              transition={{ duration: 0.3 }}
+                              className="w-full h-full flex flex-col items-center justify-center p-8 text-center bg-gray-900"
+                          >
+                              <X size={48} className="text-red-500 mb-4" />
+                              <h3 className="text-2xl font-bold text-white mb-3">
+                                  In-App Preview Blocked
+                              </h3>
+                              <p className="text-gray-400 mb-6">
+                                  This website does not support embedding via iFrame due to security restrictions. Click the button below to go directly to the partner's site.
+                              </p>
+                              <motion.a
+                                  href={embeddedUrl!}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  whileHover={{ scale: 1.05 }}
+                                  whileTap={{ scale: 0.98 }}
+                                  className="inline-flex items-center bg-red-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-red-700 transition-colors duration-200 shadow-md shadow-red-500/30"
+                              >
+                                  Go Directly to Website <ExternalLink size={18} className="ml-2" />
+                              </motion.a>
+                          </motion.div>
+                      ) : (
+                          <iframe
+                              src={embeddedUrl!}
+                              title={`Embedded Partner Site: ${embeddedUrl}`}
+                              className="w-full h-full bg-white"
+                              frameBorder="0"
+                              loading="lazy"
+                              allowFullScreen
+                          >
+                              Your browser does not support iframes.
+                          </iframe>
+                      )}
                   </div>
 
                   <div className="text-center text-sm text-gray-400 p-2">

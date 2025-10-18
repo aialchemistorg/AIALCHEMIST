@@ -62,7 +62,7 @@ const Navbar = () => {
                 href={item.href}
                 className="text-white hover:text-red-400 px-3 py-2 text-sm font-medium relative group"
                 whileHover={{ y: -2 }}
-                transition={{ type: "spring", stiffness: 300 }}
+                transition={{ type: "spring", stiffness: 200 }}
               >
                 {item.name}
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-600 group-hover:w-full transition-all duration-300"></span>
@@ -123,7 +123,7 @@ const HeroSection = () => {
               "radial-gradient(circle at 40% 40%, rgba(220, 38, 38, 0.1) 0%, transparent 50%)"
             ]
           }}
-          transition={{ duration: 8, repeat: Infinity, repeatType: "reverse" }}
+          transition={{ duration: 4, repeat: Infinity, repeatType: "reverse" }}
           className="absolute inset-0"
         />
       </div>
@@ -202,7 +202,7 @@ const ManifestoSection = () => {
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.4 }}
           className="text-center mb-16"
         >
           <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6">Our Manifesto</h2>
@@ -219,14 +219,14 @@ const ManifestoSection = () => {
                 key={value.title}
                 initial={{ opacity: 0, rotateY: -90 }}
                 animate={isInView ? { opacity: 1, rotateY: 0 } : { opacity: 0, rotateY: -90 }}
-                transition={{ duration: 0.8, delay: index * 0.2 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
                 whileHover={{
                   rotateY: 10,
                   rotateX: 10,
                   scale: 1.05,
                   boxShadow: "0 20px 40px rgba(220, 38, 38, 0.2)"
                 }}
-                className="bg-black border border-red-600/20 rounded-xl p-6 hover:border-red-600/50 transition-all duration-300 cursor-pointer"
+                className="bg-black border border-red-600/20 rounded-xl p-6 hover:border-red-600/50 transition-all duration-50 cursor-pointer"
                 style={{ transformStyle: "preserve-3d" }}
               >
                 <div className="text-center">
@@ -264,7 +264,7 @@ const PlatformSection = () => {
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.4 }}
           className="text-center mb-16"
         >
           <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6">Platform Modules</h2>
@@ -281,12 +281,12 @@ const PlatformSection = () => {
                 key={module.name}
                 initial={{ opacity: 0, x: -50 }}
                 animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
+                transition={{ duration: 0.2, delay: index * 0.1 }}
                 whileHover={{
                   y: -10,
                   boxShadow: "0 20px 40px rgba(220, 38, 38, 0.15)"
                 }}
-                className="bg-gradient-to-br from-gray-900 to-black border border-gray-700 hover:border-red-600/50 rounded-xl p-6 cursor-pointer transition-all duration-300"
+                className="bg-gradient-to-br from-gray-900 to-black border border-gray-700 hover:border-red-600/50 rounded-xl p-6 cursor-pointer transition-all duration-100"
               >
                 <div className="w-12 h-12 bg-red-600/10 rounded-lg flex items-center justify-center mb-4">
                   <Icon size={24} className="text-red-400" />
@@ -479,7 +479,7 @@ const TeamSection = () => {
           initial={{ opacity: 0, y: 50 }}
           animate={controls}
           variants={{ visible: { opacity: 1, y: 0 } }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
