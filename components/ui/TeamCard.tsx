@@ -1,297 +1,106 @@
-import React from "react";
-import styled from "styled-components";
-import Image from "next/image";
-import { AnimationPlaybackControls } from "framer-motion"; // ✅ sirf ye lagao
+"use client";
 
-// Props type
+import Image from "next/image";
+import type React from "react";
+
 type TeamCardProps = {
   imgSrc: string;
   name: string;
   role: string;
   quote: string;
   social: { linkedin: string; twitter: string; github: string };
-  delay: number;
 };
 
-const TeamCard: React.FC<TeamCardProps> = ({
-  imgSrc,
-  name,
-  role,
-  quote,
-  social,
-  delay,
-}) => {
+const TeamCard: React.FC<TeamCardProps> = ({ imgSrc, name, role, quote, social }) => {
   return (
-    <StyledWrapper>
-      <div className="card">
-        {/* Mail button */}
-        <button className="mail">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width={24}
-            height={24}
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={2}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <rect width={20} height={16} x={2} y={4} rx={2} />
-            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-          </svg>
-        </button>
+    <div
+      className="
+        group relative w-72 h-[380px] shrink-0 rounded-3xl 
+        overflow-hidden border border-white/10 
+        bg-gradient-to-br from-white/5 via-white/2 to-white/5
+        backdrop-blur-lg shadow-[0_0_20px_rgba(255,255,255,0.05)]
+        transition-all duration-500 hover:scale-[1.04] hover:shadow-[0_0_30px_rgba(255,0,80,0.25)]
+      "
+    >
+      {/* Image Section */}
+      <div className="relative w-full h-[250px] overflow-hidden rounded-t-2xl">
+        <Image
+          src={imgSrc || "/placeholder.svg"}
+          alt={name}
+          fill
+          sizes="(max-width: 768px) 100vw, 320px"
+          className="
+      object-cover object-top
+      transition-transform duration-700
+      group-hover:scale-110 group-hover:rotate-1
+    "
+        />
+        {/* Gradient overlay - reversed for better visibility */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/30 to-black/70" />
+      </div>
 
-        {/* Profile Pic */}
-        <div className="profile-pic">
-          <Image
-            src={imgSrc}
-            alt={name || "profile picture"}
-            width={300}
-            height={300}
-            style={{ objectFit: "cover", objectPosition: "center top" }}
-          />
-        </div>
 
-        {/* Bottom Section */}
-        <div className="bottom">
-          <div className="content">
-            <span className="name">{name}</span>
-            <span className="about-me">{role}</span>
+      {/* Content */}
+      <div className="absolute bottom-0 left-0 right-0 p-3 pt-4">
+        <h3 className="text-lg font-semibold bg-gradient-to-r from-red-400 via-red-300 to-red-200 bg-clip-text text-transparent pt-20">
+          {name}
+        </h3>
+        <p className="text-xs text-red-400 font-medium">{role}</p>
+        <p className="text-gray-300 text-sm italic mt-2 line-clamp-2">“{quote}”</p>
+
+        <div className="flex justify-between items-center mt-4">
+          <div className="flex gap-2">
+            {[
+              {
+                href: social.linkedin,
+                icon: "M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z",
+              },
+              {
+                href: social.twitter,
+                icon: "M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2s9 5 20 5a9.5 9.5 0 00-9-5.5c4.75 2.25 7-7 7-7a10.6 10.6 0 01-9-5.5z",
+              },
+              {
+                href: social.github,
+                icon: "M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z",
+              },
+            ].map((s, i) => (
+              <a
+                key={i}
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="
+                  h-8 w-8 flex items-center justify-center rounded-full 
+                  bg-gradient-to-br from-red-700/40 via-red-600/30 to-red-400/40 
+                  text-red-300 hover:text-white transition-all duration-300 
+                  hover:shadow-[0_0_10px_rgba(255,0,80,0.4)] hover:scale-110
+                "
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width={14}
+                  height={14}
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path d={s.icon} />
+                </svg>
+              </a>
+            ))}
           </div>
-          <div className="bottom-bottom">
-            <div className="social-links-container">
-              <a href={social.linkedin} target="_blank" rel="noopener noreferrer">
-                <svg xmlns="http://www.w3.org/2000/svg" width={16} height="15.999" viewBox="0 0 16 15.999">
-                  <path
-                    d="M6-582H-2a4,4,0,0,1-4-4v-8a4,4,0,0,1,4-4H6a4,4,0,0,1,4,4v8A4,4,0,0,1,6-582ZM2-594a4,4,0,0,0-4,4,4,4,0,0,0,4,4,4,4,0,0,0,4-4A4.005,4.005,0,0,0,2-594Zm4.5-2a1,1,0,0,0-1,1,1,1,0,0,0,1,1,1,1,0,0,0,1-1A1,1,0,0,0,6.5-596ZM2-587.5A2.5,2.5,0,0,1-.5-590,2.5,2.5,0,0,1,2-592.5,2.5,2.5,0,0,1,4.5-590,2.5,2.5,0,0,1,2-587.5Z"
-                    transform="translate(6 598)"
-                  />
-                </svg>
-              </a>
-              <a href={social.twitter} target="_blank" rel="noopener noreferrer">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                  <path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" />
-                </svg>
-              </a>
-              <a href={social.github} target="_blank" rel="noopener noreferrer">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512">
-                  <path d="M165.9 397.4c0 2-2.3 3.6-5.2..."></path>
-                </svg>
-              </a>
-            </div>
-            <button className="button">Contact Me</button>
-          </div>
+
+          <button className="
+            text-xs font-semibold text-white px-3 py-1.5 rounded-full 
+            bg-gradient-to-r from-red-600 to-pink-500 
+            hover:from-pink-500 hover:to-red-400 
+            transition-all duration-300 hover:shadow-[0_0_15px_rgba(255,0,80,0.4)]
+          ">
+            Contact
+          </button>
         </div>
       </div>
-    </StyledWrapper>
+    </div>
   );
 };
-const StyledWrapper = styled.div`
- .card {
-    width: 280px;
-    height: 280px;
-    background: #111827;   /* 👈 dark slate bg */
-  color: #F9FAFB;   
-    border-radius: 32px;
-    padding: 3px;
-    position: relative;
-    box-shadow: #604b4a30 0px 70px 30px -50px;
-    transition: all 0.5s ease-in-out;
-  }
-
-  .card .mail {
-    position: absolute;
-    right: 2rem;
-    top: 1.4rem;
-    background: transparent;
-    border: none;
-  }
-
-  .card .mail svg {
-    stroke: #fbb9b6;
-    stroke-width: 3px;
-  }
-
-  .card .mail svg:hover {
-    stroke: #f55d56;
-  }
-
-
- .card .profile-pic {
-    position: absolute;
-    width: calc(100% - 6px);
-    height: calc(100% - 6px);
-    top: 3px;
-    left: 3px;
-    border-radius: 29px;
-    z-index: 1;
-     border: 4px solid #ef4444; 
-    overflow: hidden;
-    clip-path: circle(75% at 50% 50%);  /* 👈 smooth mask */
-    transition: 
-      width 0.6s ease-in-out,
-      height 0.6s ease-in-out,
-      top 0.6s ease-in-out,
-      left 0.6s ease-in-out,
-      clip-path 0.6s ease-in-out,  /* 👈 use clip-path instead of border-radius */
-      border 0.6s ease-in-out,
-      box-shadow 0.6s ease-in-out,
-      z-index 0.6s ease-in-out;
-  }
-
-  .card:hover .profile-pic {
-    width: 110px;
-    height: 110px;
-    top: 10px;
-    left: 10px;
-    clip-path: circle(50% at 50% 50%); /* 👈 perfect circle */
-    border: 6px solid #fbb9b6;
-    z-index: 3;
-    box-shadow: rgba(96, 75, 74, 0.2) 0px 5px 15px;
-  }
-
-  .card .profile-pic img {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-    object-position: center top;
-    transition: transform 0.6s ease-in-out, object-position 0.6s ease-in-out;
-  }
-
-  .card:hover .profile-pic img {
-    transform: scale(1.2);
-    object-position: center -20%;
-  }
-
-
-  .card .bottom {
-    position: absolute;
-    bottom: 3px;
-    left: 3px;
-    right: 3px;
-    background: #1F2937;
-    top: 80%;
-    border-radius: 29px;
-    z-index: 2;
-    box-shadow: rgba(96, 75, 74, 0.1882352941) 0px 5px 5px 0px inset;
-    overflow: hidden;
-    transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1) 0s;
-  }
-
-  .card .bottom .content {
-    position: absolute;
-    bottom: 0;
-    left: 1.5rem;
-    right: 1.5rem;
-    height: 160px;
-  }
-
-  .card .bottom .content .name {
-    display: block;
-    font-size: 1.2rem;
-    color: white;
-    font-weight: bold;
-  }
-
-  .card .bottom .content .about-me {
-    display: block;
-    font-size: 0.9rem;
-    color: white;
-    margin-top: 1rem;
-  }
-
-  .card .bottom .bottom-bottom {
-    position: absolute;
-    bottom: 1rem;
-    left: 1.5rem;
-    right: 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .card .bottom .bottom-bottom .social-links-container {
-    display: flex;
-    gap: 1rem;
-  }
-
-  .card .bottom .bottom-bottom .social-links-container svg {
-    height: 20px;
-    fill: white;
-    filter: drop-shadow(0 5px 5px rgba(165, 132, 130, 0.1333333333));
-    transition: transform 0.3s ease;
-  }
-
-  .card .bottom .bottom-bottom .social-links-container svg:hover {
-    fill: #f55d56;
-    transform: scale(1.2);
-  }
-
-  .card .bottom .bottom-bottom .button {
-    background: #ef4444;   /* 👈 red accent button */
-  color: #fff;
-    border: none;
-    border-radius: 20px;
-    font-size: 0.6rem;
-    padding: 0.4rem 0.6rem;
-    box-shadow: rgba(165, 132, 130, 0.1333333333) 0px 5px 5px 0px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-  .card .bottom .bottom-bottom .button:hover {
-     background: #DC2626; 
-    color: white;
-  }
-
-  .card:hover {
-    border-top-left-radius: 55px;
-  }
-
-  .card:hover .bottom {
-    top: 20%;
-    border-radius: 80px 29px 29px 29px;
-    transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1) 0.2s;
-  }
-
-  .card:hover .profile-pic {
-    width: 100px;
-    height: 100px;
-    aspect-ratio: 1;
-    top: 10px;
-    left: 10px;
-    border-radius: 50%;
-    z-index: 3;
-    border: 7px solid #fbb9b6;
-    box-shadow: rgba(96, 75, 74, 0.1882352941) 0px 5px 5px 0px;
-    transition: all 0.5s ease-in-out, z-index 0.5s ease-in-out 0.1s;
-  }
-
-  .card:hover .profile-pic:hover {
-    transform: scale(1.3);
-    border-radius: 0px;
-  }
-
-  .card:hover .profile-pic img {
-    transform: scale(2.5);
-    object-position: 0px 25px;
-    transition: all 0.5s ease-in-out 0.5s;
-  }
-    .card .profile-pic img {
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
-  object-position: center top;  /* 👈 initially full fit */
-  transition: all 0.5s ease-in-out 0s;
-}
-
-.card:hover .profile-pic img {
-  transform: scale(1.0); /* 👈 zoom in for face */
-  object-position: center -20%; /* 👈 shift focus to face */
-  transition: all 0.5s ease-in-out 0.5s;
-}
-
-`;
 
 export default TeamCard;
