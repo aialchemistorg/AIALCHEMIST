@@ -92,3 +92,24 @@
     scrollbar-width: none;     /* Firefox */
   }  
 }
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* The trick: duplicate all cards once (100% width each copy) */
+.marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 30s linear infinite;
+}
+
+/* Pause cleanly on hover */
+.marquee:hover {
+  animation-play-state: paused;
+}
