@@ -9,6 +9,7 @@ import {
 import TeamCard from '../components/ui/TeamCard';
 import { useAnimationControls } from "framer-motion";
 import Image from 'next/image';
+import "./globals.css"
 
 // Navigation Component
 const Navbar = () => {
@@ -302,179 +303,60 @@ const PlatformSection = () => {
   );
 };
 
-// Team Section
 const TeamSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: false, margin: "-100px" });
   const controls = useAnimation();
 
   useEffect(() => {
-    if (isInView) {
-      controls.start("visible");
-    }
+    if (isInView) controls.start("visible");
   }, [isInView, controls]);
 
-  const teamStructure = [
+  const members = [
     {
-      title: "Founders",
-      members: [
-        {
-          name: "Sayman Lal",
-          role: "CEO",
-          email: "sayman@aialchemist.org",
-          quote: "Innovation through collaboration",
-          type: "founder",
-          social: { linkedin: "#", twitter: "#", github: "#" },
-          expertise: ["AI Strategy", "Research", "Leadership"],
-          image: "/team/sayman.png"
-        },
-        {
-          name: "Aadeesh Jain",
-          role: "COO",
-          email: "aadeesh@aialchemist.org",
-          quote: "Empowering the next generation",
-          type: "founder",
-          social: { linkedin: "#", twitter: "#", github: "#" },
-          expertise: ["Operations", "Growth", "Management"],
-          image: "/team/aadeesh.png"
-        }
-      ]
+      name: "Sayman Lal",
+      role: "CEO",
+      quote: "Innovation through collaboration",
+      social: { linkedin: "#", twitter: "#", github: "#" },
+      image: "/team/sayman.png",
     },
     {
-      title: "Department Leads",
-      members: [
-        {
-          name: "Utkarsh Kushwaha",
-          role: "AI Research Lead",
-          email: "utkarsh@aialchemist.org",
-          quote: "Pushing boundaries in AI",
-          type: "lead",
-          social: { linkedin: "#", twitter: "#", github: "#" },
-          expertise: ["Deep Learning", "NLP", "Computer Vision"],
-          image: "/team/utkarsh.png"
-        },
-        {
-          name: "Praveen Rajak",
-          role: "Web3 Lead",
-          email: "praveen@aialchemist.org",
-          quote: "Decentralizing the future",
-          type: "lead",
-          social: { linkedin: "#", twitter: "#", github: "#" },
-          expertise: ["Blockchain", "Smart Contracts", "Web3"],
-          image: "/team/praveen.png"
-        },
-        {
-          name: "Kaustubh Sen",
-          role: "Web3 Lead",
-          email: "praveen@aialchemist.org",
-          quote: "Decentralizing the future",
-          type: "lead",
-          social: { linkedin: "#", twitter: "#", github: "#" },
-          expertise: ["Blockchain", "Smart Contracts", "Web3"],
-          image: "/team/kaustubh.png"
-        },
-        {
-          name: "Yash Namdeo",
-          role: "Web3 Lead",
-          email: "praveen@aialchemist.org",
-          quote: "Decentralizing the future",
-          type: "lead",
-          social: { linkedin: "#", twitter: "#", github: "#" },
-          expertise: ["Blockchain", "Smart Contracts", "Web3"],
-          image: "/team/yash.png"
-        }
-      ]
+      name: "Utkarsh Kushwaha",
+      role: "AI Research Lead",
+      quote: "Pushing boundaries in AI",
+      social: { linkedin: "#", twitter: "#", github: "#" },
+      image: "/team/utkarsh.png",
     },
     {
-      title: "Core Team",
-      members: [
-        {
-          name: "Shreya Patel",
-          role: "Product Lead",
-          email: "shreya@aialchemist.org",
-          quote: "Building meaningful experiences",
-          type: "core",
-          social: { linkedin: "#", twitter: "#", github: "#" },
-          expertise: ["Product Management", "UX", "User Research"],
-          image: "/team/shreya.png"
-        },
-        {
-          name: "Shailendra Yadav",
-          role: "Engineering Lead",
-          email: "shailendra@aialchemist.org",
-          quote: "Scalable solutions for complex problems",
-          type: "core",
-          social: { linkedin: "#", twitter: "#", github: "#" },
-          expertise: ["System Design", "Architecture", "DevOps"],
-          image: "/team/shailendra.png"
-        },
-        {
-          name: "Shalab Kumar Shrivastava",
-          role: "Engineering Lead",
-          email: "shalab@aialchemist.org",
-          quote: "Scalable solutions for complex problems",
-          type: "core",
-          social: { linkedin: "#", twitter: "#", github: "#" },
-          expertise: ["System Design", "Architecture", "DevOps"],
-          image: "/team/shalab.png"
-        },
-        {
-          name: "Divyansh Gautam",
-          role: "Engineering Lead",
-          email: "divyansh@aialchemist.org",
-          quote: "Scalable solutions for complex problems",
-          type: "core",
-          social: { linkedin: "#", twitter: "#", github: "#" },
-          expertise: ["System Design", "Architecture", "DevOps"],
-          image: "/team/divyansh.png"
-        },
-        {
-          name: "Swastik Dubey",
-          role: "Engineering Lead",
-          email: "swastik@aialchemist.org",
-          quote: "Scalable solutions for complex problems",
-          type: "core",
-          social: { linkedin: "#", twitter: "#", github: "#" },
-          expertise: ["System Design", "Architecture", "DevOps"],
-          image: "/team/swastik.png"
-        },
-        {
-          name: "Priya Chaturvedi",
-          role: "Engineering Lead",
-          email: "priya@aialchemist.org",
-          quote: "Scalable solutions for complex problems",
-          type: "core",
-          social: { linkedin: "#", twitter: "#", github: "#" },
-          expertise: ["System Design", "Architecture", "DevOps"],
-          image: "/team/priya.png"
-        },
-        {
-          name: "Gaurav Jain",
-          role: "Engineering Lead",
-          email: "gaurav@aialchemist.org",
-          quote: "Scalable solutions for complex problems",
-          type: "core",
-          social: { linkedin: "#", twitter: "#", github: "#" },
-          expertise: ["System Design", "Architecture", "DevOps"],
-          image: "/team/gaurav.png"
-        },
-        {
-          name: "Abhishek Lal",
-          role: "Engineering Lead",
-          email: "abhishek@aialchemist.org",
-          quote: "Scalable solutions for complex problems",
-          type: "core",
-          social: { linkedin: "#", twitter: "#", github: "#" },
-          expertise: ["System Design", "Architecture", "DevOps"],
-          image: "/team/abhishek.png"
-        }
-      ]
-    }
+      name: "Praveen Rajak",
+      role: "Web3 Lead",
+      quote: "Decentralizing the future",
+      social: { linkedin: "#", twitter: "#", github: "#" },
+      image: "/team/praveen.png",
+    },
+    {
+      name: "Kaustubh Sen",
+      role: "Web3 Lead",
+      quote: "Decentralizing the future",
+      social: { linkedin: "#", twitter: "#", github: "#" },
+      image: "/team/kaustubh.png",
+    },
+    {
+      name: "Yash Namdeo",
+      role: "Web3 Lead",
+      quote: "Decentralizing the future",
+      social: { linkedin: "#", twitter: "#", github: "#" },
+      image: "/team/yash.png",
+    },
   ];
 
   return (
-    <section id="teams" ref={ref} className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-gradient-to-b from-black to-gray-900/30">
-      <div className="max-w-7xl mx-auto relative z-10">
+    <section
+      id="teams"
+      ref={ref}
+      className="py-20 relative overflow-hidden bg-gradient-to-b from-black to-gray-900/30"
+    >
+      <div className="w-full mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={controls}
@@ -482,7 +364,7 @@ const TeamSection = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
+          <h2 className="text-5xl font-bold text-white mb-6">
             <span className="bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
               Meet Our Team
             </span>
@@ -492,35 +374,21 @@ const TeamSection = () => {
           </p>
         </motion.div>
 
-        <div className="space-y-16">
-          {teamStructure.map((team, index) => (
-            <div key={team.title} className="mb-16">
-              <motion.h3
-                initial={{ opacity: 0, x: -20 }}
-                animate={controls}
-                variants={{ visible: { opacity: 1, x: 0 } }}
-                transition={{ delay: 0.2 + index * 0.1 }}
-                className="text-3xl font-bold text-white mb-8 text-center"
-              >
-                {team.title}
-              </motion.h3>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-8 justify-items-center">
-                {team.members.map((member, memberIndex) => (
-                  <TeamCard
-                    key={member.name}
-                    imgSrc={member.image}   // ✅ src → imgSrc
-                    name={member.name}
-                    role={member.role}
-                    quote={member.quote}
-                    social={member.social}
-                    delay={0.3 + index * 0.1 + memberIndex * 0.05}
-                  />
-                ))}
-              </div>
-            </div>
-          ))}
+        <div className="overflow-hidden relative">
+          <div className="marquee flex gap-8 group-hover:[animation-play-state:paused]">
+            {[...members, ...members].map((member, i) => (
+              <TeamCard
+                key={`${member.name}-${i}`}
+                imgSrc={member.image}
+                name={member.name}
+                role={member.role}
+                quote={member.quote}
+                social={member.social}
+              />
+            ))}
+          </div>
         </div>
+
       </div>
     </section>
   );
